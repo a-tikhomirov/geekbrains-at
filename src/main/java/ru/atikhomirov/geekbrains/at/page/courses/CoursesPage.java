@@ -26,7 +26,7 @@ public class CoursesPage extends ContentPage {
     @Step("Установить в {state} фильтр {filter}")
     private void setFilter(boolean state, String filterName){
         WebElement checkbox = findElement(filters, filterName);
-        if (checkbox.isSelected() != state) clickCheckbox(checkbox);
+        if (checkbox.isSelected() != state) checkbox.click();
     }
 
     @Step("Проверить наличие курса \"{course}\" в списке курсов")

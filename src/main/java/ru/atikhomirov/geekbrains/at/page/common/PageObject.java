@@ -34,24 +34,12 @@ public class PageObject {
         return element;
     }
 
-    protected WebElement waitCheckBoxState(WebElement element, boolean state) {
-        wait.until(ExpectedConditions.elementSelectionStateToBe(element, state));
-        return element;
-    }
-
     // Get elements values
     protected String getElementText(WebElement element) {
         return waitVisible(element).getText();
     }
 
     protected int getElementInt(WebElement element) { return Integer.valueOf(getElementText(element)); }
-
-    // Actions
-    protected void clickCheckbox(WebElement element) {
-        boolean initialState = element.isSelected();
-        element.click();
-        waitCheckBoxState(element, !initialState);
-    }
 
     // Check elements
     protected void checkText(WebElement element, String expectedText) {

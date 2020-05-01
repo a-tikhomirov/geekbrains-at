@@ -2,6 +2,7 @@ package ru.atikhomirov.geekbrains.at.section;
 
 import io.qameta.allure.Step;
 import org.hamcrest.Matcher;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -83,7 +84,8 @@ public class Search extends PageObject {
 
     @Step("Проверка элемента {tab} на соответствие условию {matcher}")
     public Search checkCount(Tab tab, Matcher<Integer> matcher) {
-        checkText(getButton(tab), matcher);
+        WebElement counter = waitVisible(getButton(tab)).findElement(By.cssSelector("span"));
+        checkText(counter, matcher);
         return this;
     }
 

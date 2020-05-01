@@ -157,12 +157,14 @@
 
 Возможно скачать архив или клонировать проект при наличии git.
 
-[Ссылка на скачивание архива](https://github.com/a-tikhomirov/geekbrains-at/archive/master.zip)
+[Ссылка на скачивание архива](https://github.com/a-tikhomirov/geekbrains-at/archive/selenium_based.zip)
 
 Команда для клонирования проекта:
 
 ```
 $ git clone https://github.com/a-tikhomirov/geekbrains-at.git
+$ cd geekbrains-at/
+$ git checkout selenium_based
 ```
 
 Для запуска проекта необходимо в командной строке перейти в директорию проекта и выполнить команду:
@@ -227,7 +229,12 @@ mvn clean test allure:serve
 - selenium-java
 - webdrivermanager
 - allure-junit5
-- junit-jupiter
+- junit-jupiter-api
+- junit-jupiter-engine
+- junit-jupiter-params
+- junit-vintage-engine
+- junit-platform-engine
+- junit-platform-launcher
 - hamcrest
 - slf4j-simple
 
@@ -243,4 +250,4 @@ mvn clean test allure:serve
   
 ## Дополнительно
 
-Этот же проект, но с использованием библиотеки _Selenide_: https://github.com/a-tikhomirov/geekbrains-at
+Этот же проект, но с использованием библиотеки _Selenide_ - https://github.com/a-tikhomirov/geekbrains-at - ветка _master_
