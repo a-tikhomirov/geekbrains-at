@@ -21,15 +21,13 @@
 
 1. JDK 1.8
 2. Maven 3.6.3
-3. Устновленный браузер Google Chrome
+3. Установленный браузер Google Chrome
 
 ### Установка JDK
 
 - Для Windows:
 
-    Скачать Open JDK:  
-    [x32 jdk8u252-b09.1](https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u252-b09.1/OpenJDK8U-jdk_x86-32_windows_hotspot_8u252b09.msi)  
-    [x64 jdk8u252-b09.1](https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u252-b09.1/OpenJDK8U-jdk_x64_windows_hotspot_8u252b09.msi)
+    Скачать Open JDK: [x32 jdk8u252-b09.1](https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u252-b09.1/OpenJDK8U-jdk_x86-32_windows_hotspot_8u252b09.msi) / [x64 jdk8u252-b09.1](https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u252-b09.1/OpenJDK8U-jdk_x64_windows_hotspot_8u252b09.msi)
 
     Запустить скачанный `.msi` файл.
     
