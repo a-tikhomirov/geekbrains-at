@@ -1,27 +1,33 @@
 package ru.atikhomirov.geekbrains.at.page.courses;
 
-import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import ru.atikhomirov.geekbrains.at.page.common.PageObject;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.page;
+public class HeaderNavTab extends PageObject {
+    private CoursesPage ownerPage;
 
-public class HeaderNavTab {
+    @FindBy(css = "[class*=\"nav nav-tabs\"] [href=\"#prof-compact\"]")
+    private WebElement buttonNavProfessions;
 
-    private SelenideElement buttonNavProfessions =
-            $("[class*=\"nav nav-tabs\"] [href=\"#prof-compact\"]");
+    @FindBy(css = "[class*=\"nav nav-tabs\"] [href=\"#free\"]")
+    private WebElement buttonFreeIntensives;
 
-    private SelenideElement buttonFreeIntensives =
-            $("[class*=\"nav nav-tabs\"] [href=\"#free\"]");
+    @FindBy(css = "[class*=\"nav nav-tabs\"] [href=\"#cour-new\"]")
+    private WebElement buttonNavCourses;
 
-    private SelenideElement buttonNavCourses =
-            $("[class*=\"nav nav-tabs\"] [href=\"#cour-new\"]");
+    @FindBy(css = "[class*=\"nav nav-tabs\"] [href*=\"forbusiness\"]")
+    private WebElement buttonForBusiness;
 
-    private SelenideElement buttonForBusiness =
-            $("[class*=\"nav nav-tabs\"] [href*=\"forbusiness\"]");
+    public HeaderNavTab(WebDriver driver, CoursesPage ownerPage) {
+        super(driver);
+        this.ownerPage = ownerPage;
+    }
 
-    private SelenideElement getButton(Button button) {
+    private WebElement getButton(Button button) {
         switch (button){
             case Professions: {
                 return buttonNavProfessions;
@@ -43,8 +49,8 @@ public class HeaderNavTab {
 
     @Step("Нажать на кнопку \"{button}\" в секции headerNavigationTab")
     public CoursesPage clickButton(Button button){
-        getButton(button).click();
-        return page(CoursesPage.class);
+        waitClickable(getButton(button)).click();
+        return ownerPage;
     }
 
     public enum Button {

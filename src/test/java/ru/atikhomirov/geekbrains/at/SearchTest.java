@@ -3,6 +3,8 @@ package ru.atikhomirov.geekbrains.at;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
@@ -19,12 +21,17 @@ import static org.hamcrest.Matchers.*;
 @Execution(ExecutionMode.CONCURRENT)
 public class SearchTest extends BaseTest {
 
+    @BeforeEach
+    void SetUp() {
+        setUpChromeDriver();
+        openPage("https://geekbrains.ru/career");
+    }
+
     @Description("Проверка результатов поиска по ключевому слову Java")
     @DisplayName("Проверка элементов")
     @Test
     void checkSearchResults() {
-        openPage("https://geekbrains.ru/career");
-        new CareerPage()
+        new CareerPage(driver)
                 .getHeader().clickSearch()
                 .enterSearchText("Java")
                 .checkCount(Search.Tab.Professions, greaterThanOrEqualTo(2))
@@ -36,5 +43,10 @@ public class SearchTest extends BaseTest {
                 .checkCount(Search.Tab.Blogs, greaterThan(300))
                 .checkCount(Search.Tab.Forums, not(350))
                 .checkCount(Search.Tab.Tests, not(0));
+    }
+
+    @AfterEach
+    void tearDown() {
+        stopDriver();
     }
 }

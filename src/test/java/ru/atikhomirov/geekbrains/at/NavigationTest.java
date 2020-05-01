@@ -3,6 +3,8 @@ package ru.atikhomirov.geekbrains.at;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
@@ -18,6 +20,12 @@ import ru.atikhomirov.geekbrains.at.section.Sidebar;
 @Execution(ExecutionMode.CONCURRENT)
 public class NavigationTest extends BaseTest {
 
+    @BeforeEach
+    void SetUp() {
+        setUpChromeDriver();
+        openPage("https://geekbrains.ru/career");
+    }
+
     static Sidebar.Button[] stringProvider() {
         return  Sidebar.Button.values();
     }
@@ -27,12 +35,16 @@ public class NavigationTest extends BaseTest {
     @ParameterizedTest(name = "{index} ==> Проверка перехода на страницу \"{0}\"...")
     @MethodSource("stringProvider")
     void checkSideBarNavigation(Sidebar.Button button) {
-        openPage("https://geekbrains.ru/career");
-        new CareerPage()
+        new CareerPage(driver)
                 .getSidebar().clickButton(button)
                 .getHeader().checkSection()
                 .getHeader().checkTitle(button.getName())
                 .getFooter().checkSection()
                 .getFooter().checkElementsText();
+    }
+
+    @AfterEach
+    void tearDown() {
+        stopDriver();
     }
 }

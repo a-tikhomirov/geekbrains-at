@@ -14,6 +14,7 @@
     - [Используемые библиотеки](#Используемые-библиотеки)
     - [Используемые плагины](#Используемые-плагины)
   - [Автор](#Автор)
+  - [Дополнительно](#Дополнительно)
 
 ## Требования
 
@@ -223,15 +224,10 @@ mvn clean test allure:serve
 
 ### Используемые библиотеки
 
-- selenide
-- allure-selenide
+- selenium-java
+- webdrivermanager
 - allure-junit5
-- junit-jupiter-api
-- junit-jupiter-engine
-- junit-jupiter-params
-- junit-vintage-engine
-- junit-platform-engine
-- junit-platform-launcher
+- junit-jupiter
 - hamcrest
 - slf4j-simple
 
@@ -244,3 +240,7 @@ mvn clean test allure:serve
 ## Автор
 
   - **Андрей Тихомиров** - <andrey.tikhomirov.88@gmail.com>
+  
+## Дополнительно
+
+Этот же проект, но с использованием библиотеки _Selenide_: https://github.com/a-tikhomirov/geekbrains-at

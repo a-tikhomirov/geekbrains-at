@@ -1,47 +1,51 @@
 package ru.atikhomirov.geekbrains.at.page.courses;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import ru.atikhomirov.geekbrains.at.page.common.ContentPage;
 
-import static com.codeborne.selenide.Selenide.$$;
+import java.util.List;
 
 public class CoursesPage extends ContentPage {
 
     private HeaderNavTab headerNavTab;
 
-    private ElementsCollection filters =
-            $$(By.xpath("//div[@class=\"course-filter-wrapper\"]//li[@class=\"list-group-item\"]"));
+    @FindBy(xpath = "//form/ul//label")
+    private List<WebElement> filters;
 
-    private ElementsCollection courses =
-            $$(By.xpath("//div[@class=\"course-cards-wrapper\"]//div[@class=\"gb-course-card__title-wrapper\"]"));
+    @FindBy(xpath = "//a/div/div/span")
+    private List<WebElement> courses;
 
-    protected SelenideElement getElementFromCollection(ElementsCollection collection, Condition condition) {
-        return collection.findBy(condition).waitUntil(Condition.visible, 5000);
+    public CoursesPage(WebDriver driver) {
+        super(driver);
+        headerNavTab = new HeaderNavTab(driver, this);
     }
 
-    public CoursesPage() {
-        super();
-        headerNavTab = new HeaderNavTab();
+    @Step("Установить в {state} фильтр {filter}")
+    private void setFilter(boolean state, String filterName){
+        WebElement checkbox = findElement(filters, filterName);
+        if (checkbox.isSelected() != state) clickCheckbox(checkbox);
     }
 
-    @Step("Установить в [{state}] фильтры: {args}")
+    @Step("Проверить наличие курса \"{course}\" в списке курсов")
+    private void checkCourse(String course) {
+        checkElementDisplayed(findElement(courses, course));
+    }
+
+    //@Step("Установить в [{state}] фильтры: {args}")
     public CoursesPage setFilter(boolean state, String... args) {
         for (String filterName : args) {
-            SelenideElement checkBox = getElementFromCollection(filters, Condition.text(filterName))
-                    .find(By.className("js-checkbox"));
-            if (checkBox.isSelected() != state) checkBox.click();
+            setFilter(state, filterName);
         }
         return this;
     }
 
-    @Step("Проверить наличие курсов: {args}")
+    //@Step("Проверить наличие курсов: {args}")
     public CoursesPage checkDisplayedCourses(String... args) {
         for (String expectedCourse : args) {
-            getElementFromCollection(courses, Condition.text(expectedCourse));
+            checkCourse(expectedCourse);
         }
         return this;
     }

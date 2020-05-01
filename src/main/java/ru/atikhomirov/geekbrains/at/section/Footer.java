@@ -1,85 +1,88 @@
 package ru.atikhomirov.geekbrains.at.section;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import ru.atikhomirov.geekbrains.at.page.common.ContentPage;
+import ru.atikhomirov.geekbrains.at.page.common.PageObject;
 
-import static com.codeborne.selenide.Selenide.$;
-
-public class Footer {
+public class Footer extends PageObject {
     private ContentPage ownerPage;
 
-    private SelenideElement section =
-            $("[class=\"site-footer\"]");
+    @FindBy(css = "[class=\"site-footer\"]")
+    private WebElement section;
 
-    private SelenideElement buttonFacebook =
-            $("[class*=\"site-footer\"] [href*=\"facebook\"]");
+    @FindBy(css = "[class*=\"site-footer\"] [href*=\"facebook\"]")
+    private WebElement buttonFacebook;
 
-    private SelenideElement buttonVK =
-            $("[class*=\"site-footer\"] [href*=\"vk\"]");
+    @FindBy(css = "[class*=\"site-footer\"] [href*=\"vk\"]")
+    private WebElement buttonVK;
 
-    private SelenideElement buttonInstagramm =
-            $("[class*=\"site-footer\"] [href*=\"instagram\"]");
+    @FindBy(css = "[class*=\"site-footer\"] [href*=\"instagram\"]")
+    private WebElement buttonInstagramm;
 
-    private SelenideElement buttonYoutube =
-            $("[class*=\"site-footer\"] [href*=\"youtube\"]");
+    @FindBy(css = "[class*=\"site-footer\"] [href*=\"youtube\"]")
+    private WebElement buttonYoutube;
 
-    private SelenideElement buttonTelegram =
-            $("[class*=\"site-footer\"] [href*=\"telegram\"]");
+    @FindBy(css = "[class*=\"site-footer\"] [href*=\"telegram\"]")
+    private WebElement buttonTelegram;
 
-    private SelenideElement buttonFeedbacks =
-            $("[class*=\"site-footer\"] [href=\"/feedbacks\"]");
+    @FindBy(css = "[class*=\"site-footer\"] [href=\"/feedbacks\"]")
+    private WebElement buttonFeedbacks;
 
-    private SelenideElement buttonHelp =
-            $("[class*=\"site-footer\"] [href*=\"geekbrains.zendesk.com\"]");
+    @FindBy(css = "[class*=\"site-footer\"] [href*=\"geekbrains.zendesk.com\"]")
+    private WebElement buttonHelp;
 
-    private SelenideElement buttonAbout =
-            $("[class*=\"site-footer\"] [href=\"/company\"]");
+    @FindBy(css = "[class*=\"site-footer\"] [href=\"/company\"]")
+    private WebElement buttonAbout;
 
-    private SelenideElement buttonLiscense =
-            $("[class*=\"site-footer\"] [href=\"/license.pdf\"]");
+    @FindBy(css = "[class*=\"site-footer\"] [href=\"/license.pdf\"]")
+    private WebElement buttonLiscense;
 
-    private SelenideElement buttonCareer =
-            $("[class*=\"site-footer\"] [href=\"/career/682\"]");
+    @FindBy(css = "[class*=\"site-footer\"] [href=\"/career/682\"]")
+    private WebElement buttonCareer;
 
-    private SelenideElement buttonForBusiness =
-            $("[class*=\"site-footer\"] [href=\"https://forbusiness.geekbrains.ru\"]");
+    @FindBy(css = "[class*=\"site-footer\"] [href=\"https://forbusiness.geekbrains.ru\"]")
+    private WebElement buttonForBusiness;
 
-    private SelenideElement buttonPhone =
-            $("[class=\"site-footer__phone\"]");
+    @FindBy(css = "[class=\"site-footer__phone\"]")
+    private WebElement buttonPhone;
 
-    public Footer(ContentPage ownerPage) {
+    public Footer(WebDriver driver, ContentPage ownerPage) {
+        super(driver);
         this.ownerPage = ownerPage;
     }
 
     @Step("Проверить элементы страницы в секции footer")
     public ContentPage checkSection(){
-        section.isDisplayed();
-        buttonFacebook.isDisplayed();
-        buttonVK.isDisplayed();
-        buttonInstagramm.isDisplayed();
-        buttonYoutube.isDisplayed();
-        buttonTelegram.isDisplayed();
-        buttonFeedbacks.isDisplayed();
-        buttonHelp.isDisplayed();
-        buttonAbout.isDisplayed();
-        buttonLiscense.isDisplayed();
-        buttonCareer.isDisplayed();
-        buttonForBusiness.isDisplayed();
-        buttonPhone.isDisplayed();
+        checkElementDisplayed(new WebElement[] {
+                section,
+                buttonFacebook,
+                buttonVK,
+                buttonInstagramm,
+                buttonYoutube,
+                buttonTelegram,
+                buttonFeedbacks,
+                buttonHelp,
+                buttonAbout,
+                buttonLiscense,
+                buttonCareer,
+                buttonForBusiness,
+                buttonPhone
+        });
         return ownerPage;
     }
 
     @Step("Проверить текст элементов страницы в секции footer")
     public ContentPage checkElementsText() {
-        buttonFeedbacks.waitUntil(Condition.text("Отзывы"), 5000);
-        buttonHelp.waitUntil(Condition.text("Помощь"),5000);
-        buttonAbout.waitUntil(Condition.text("О проекте"),5000);
-        buttonLiscense.waitUntil(Condition.text("Лицензия"),5000);
-        buttonCareer.waitUntil(Condition.text("Вакансии"),5000);
-        buttonForBusiness.waitUntil(Condition.text("Компаниям"),5000);
-        buttonPhone.waitUntil(Condition.text("8 800 700-68-41"),5000);
+        checkText(buttonFeedbacks,"Отзывы");
+        checkText(buttonHelp,"Помощь");
+        checkText(buttonAbout,"О проекте");
+        checkText(buttonLiscense,"Лицензия");
+        checkText(buttonCareer,"Вакансии");
+        checkText(buttonForBusiness,"Компаниям");
+        checkText(buttonPhone,"8 800 700-68-41");
         return ownerPage;
     }
 }

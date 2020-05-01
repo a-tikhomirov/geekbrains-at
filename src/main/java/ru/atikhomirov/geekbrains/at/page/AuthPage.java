@@ -1,27 +1,30 @@
 package ru.atikhomirov.geekbrains.at.page;
 
-import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import ru.atikhomirov.geekbrains.at.page.common.PageObject;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.page;
+public class AuthPage extends PageObject {
+    @FindBy(css = "[id=\"user_email\"]")
+    private WebElement inputEmail;
 
-public class AuthPage {
-    private SelenideElement inputEmail =
-            $(By.id("user_email"));
+    @FindBy(css = "[id=\"user_password\"]")
+    private WebElement inputPassword;
 
-    private SelenideElement inputPassword =
-            $(By.id("user_password"));
+    @FindBy(css = "[data-testid=\"login-submit\"]")
+    private WebElement buttonLogin;
 
-    private SelenideElement buttonLogin =
-            $("[data-testid=\"login-submit\"]");
+    public AuthPage(WebDriver driver) {
+        super(driver);
+    }
 
     @Step("Авторизоваться с данными {email} / {passwd}")
     public MainPage login(String email, String passwd) {
-        inputEmail.setValue(email);
-        inputPassword.setValue(passwd);
-        buttonLogin.click();
-        return page(MainPage.class);
+        waitVisible(inputEmail).sendKeys(email);
+        waitVisible(inputPassword).sendKeys(passwd);
+        waitClickable(buttonLogin).click();
+        return new MainPage(driver);
     }
 }

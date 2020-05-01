@@ -1,52 +1,47 @@
 package ru.atikhomirov.geekbrains.at.section;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.hamcrest.Matcher;
-import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import ru.atikhomirov.geekbrains.at.page.common.ContentPage;
+import ru.atikhomirov.geekbrains.at.page.common.PageObject;
 
-import static com.codeborne.selenide.Selenide.$;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-public class Search{
+public class Search extends PageObject {
     private ContentPage ownerPage;
 
-    private SelenideElement inputSearch =
-            $("input[class=\"search-panel__search-field\"]");
+    @FindBy(css = "input[class=\"search-panel__search-field\"]")
+    private WebElement inputSearch;
 
-    private SelenideElement buttonCloseSearch =
-            $("class=\"search-panel__search-reset\"");
+    @FindBy(css = "class=\"search-panel__search-reset\"")
+    private WebElement buttonCloseSearch;
 
-    private SelenideElement tabEveryWhere =
-            $("[class='search-page-tabs'] [data-tab='all']");
+    @FindBy(css = "[class='search-page-tabs'] [data-tab='all']")
+    private WebElement tabEveryWhere;
 
-    private SelenideElement tabProfessions =
-            $("[class=\"search-page-tabs\"] [data-tab=\"professions\"]");
+    @FindBy(css = "[class='search-page-tabs'] [data-tab='professions']")
+    private WebElement tabProfessions;
 
-    private SelenideElement tabCourses =
-            $("[class=\"search-page-tabs\"] [data-tab=\"courses\"]");
+    @FindBy(css = "[class='search-page-tabs'] [data-tab='courses']")
+    private WebElement tabCourses;
 
-    private SelenideElement tabWebinars =
-            $("[class=\"search-page-tabs\"] [data-tab=\"webinars\"]");
+    @FindBy(css = "[class='search-page-tabs'] [data-tab='webinars']")
+    private WebElement tabWebinars;
 
-    private SelenideElement tabBlogs =
-            $("[class=\"search-page-tabs\"] [data-tab=\"blogs\"]");
+    @FindBy(css = "[class='search-page-tabs'] [data-tab='blogs']")
+    private WebElement tabBlogs;
 
-    private SelenideElement tabForums =
-            $("[class=\"search-page-tabs\"] [data-tab=\"forums\"]");
+    @FindBy(css = "[class='search-page-tabs'] [data-tab='forums']")
+    private WebElement tabForums;
 
-    private SelenideElement tabTests =
-            $("[class=\"search-page-tabs\"] [data-tab=\"tests\"]");
+    @FindBy(css = "[class='search-page-tabs'] [data-tab='tests']")
+    private WebElement tabTests;
 
-    private SelenideElement tabCompanies =
-            $("[class='search-page-tabs'] [data-tab='companies']");
+    @FindBy(css = "[class='search-page-tabs'] [data-tab='companies']")
+    private WebElement tabCompanies;
 
-    private SelenideElement buttonCompaniesGeekbrains =
-            $("[class*=\"search-page-block\"] [class=\"company-item__pic\"] [alt*=\"GeekBrains\"]");
-
-    private SelenideElement getButton(Tab tab) {
+    private WebElement getButton(Tab tab) {
         switch (tab) {
             case Everywhere:
                 return tabEveryWhere;
@@ -69,27 +64,27 @@ public class Search{
         }
     }
 
-    public Search(ContentPage ownerPage) {
+    public Search(WebDriver driver, ContentPage ownerPage) {
+        super(driver);
         this.ownerPage = ownerPage;
     }
 
     @Step("Ввести поисковый запрос \"{text}\"")
     public Search enterSearchText(String text) {
-        inputSearch.setValue(text).pressEnter();
-        return this;
-    }
-
-    @Step("Проверка элемента {tab} на соответствие условию {matcher}")
-    public Search checkCount(Tab tab, Matcher<Integer> matcher) {
-        String actualCount = getButton(tab).waitUntil(Condition.visible, 15000).find(By.cssSelector("span")).getText();
-        assertThat(Integer.parseInt(actualCount), matcher);
+        waitVisible(inputSearch).sendKeys(text);
         return this;
     }
 
     @Step("Закрыть поиск")
     public ContentPage clickCloseSearch() {
-        buttonCloseSearch.click();
+        waitClickable(buttonCloseSearch).click();
         return ownerPage;
+    }
+
+    @Step("Проверка элемента {tab} на соответствие условию {matcher}")
+    public Search checkCount(Tab tab, Matcher<Integer> matcher) {
+        checkText(getButton(tab), matcher);
+        return this;
     }
 
     public enum Tab {
@@ -108,7 +103,7 @@ public class Search{
             this.text = text;
         }
 
-        public String getText() {
+        public String getName() {
             return text;
         }
     }

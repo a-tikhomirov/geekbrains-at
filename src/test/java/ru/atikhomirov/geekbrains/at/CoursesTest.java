@@ -3,6 +3,8 @@ package ru.atikhomirov.geekbrains.at;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
@@ -21,12 +23,17 @@ public class CoursesTest extends BaseTest {
     private String login = "hao17583@bcaoo.com";
     private String password = "hao17583";
 
+    @BeforeEach
+    void SetUp() {
+        setUpChromeDriver();
+        openPage("https://geekbrains.ru/login");
+    }
+
     @Description("Проверка результатов фильтрации на странице https://geekbrains.ru/courses")
     @DisplayName("Проверка результатов фильтрации")
     @Test()
     void checkCourses() {
-        openPage("https://geekbrains.ru/login");
-        ((CoursesPage) new AuthPage()
+        ((CoursesPage) new AuthPage(driver)
                 .login(login, password)
                 .getSidebar().clickButton(Sidebar.Button.Courses)
                 .getHeader().checkTitle("Курсы")
@@ -34,6 +41,11 @@ public class CoursesTest extends BaseTest {
                 .getHeaderNavTab().clickButton(HeaderNavTab.Button.Courses)
                 .setFilter(true, "Бесплатные", "Тестирование")
                 .checkDisplayedCourses("Тестирование ПО. Уровень 1", "Тестирование ПО. Уровень 2");
+        stopDriver();
     }
 
+    @AfterEach
+    void tearDown() {
+        stopDriver();
+    }
 }

@@ -1,36 +1,38 @@
 package ru.atikhomirov.geekbrains.at.section;
 
-import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import ru.atikhomirov.geekbrains.at.page.CareerPage;
 import ru.atikhomirov.geekbrains.at.page.common.ContentPage;
+import ru.atikhomirov.geekbrains.at.page.common.PageObject;
 import ru.atikhomirov.geekbrains.at.page.courses.CoursesPage;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.page;
+public class Sidebar extends PageObject {
+    @FindBy(css = "[class*=\"main-page-hidden\"] [href=\"/courses\"]")
+    private WebElement buttonCourses;
 
-public class Sidebar {
-    private SelenideElement icon =
-            $("[class='svg-icon icon-logo']");
+    @FindBy(css = "[class*=\"main-page-hidden\"] [href=\"/events\"]")
+    private WebElement buttonEvents;
 
-    private SelenideElement buttonCourses =
-            $("[class*='main-page-hidden'] [href='/courses']");
+    @FindBy(css = "[class*=\"main-page-hidden\"] [href=\"/topics\"]")
+    private WebElement buttonTopics;
 
-    private SelenideElement buttonEvents =
-            $("[class*='main-page-hidden'] [href='/events']");
+    @FindBy(css = "[class*=\"main-page-hidden\"] [href=\"/posts\"]")
+    private WebElement buttonPosts;
 
-    private SelenideElement buttonTopics =
-            $("[class*='main-page-hidden'] [href='/topics']");
+    @FindBy(css = "[class*=\"main-page-hidden\"] [href=\"/tests\"]")
+    private WebElement buttonTests;
 
-    private SelenideElement buttonPosts =
-            $("[class*='main-page-hidden'] [href='/posts']");
+    @FindBy(css = "[class*=\"main-page-hidden\"] [href=\"/career\"]")
+    private WebElement buttonCareer;
 
-    private SelenideElement buttonTests =
-            $("[class*='main-page-hidden'] [href='/tests']");
-
-    private SelenideElement buttonCareer =
-            $("[class*='main-page-hidden'] [href='/career']");
+    public Sidebar(WebDriver driver) {
+        super(driver);
+    }
 
     @Step("Нажать на кнопку \"{button}\" в секции sidebar")
     public ContentPage clickButton(Button button) {
@@ -59,7 +61,7 @@ public class Sidebar {
             default:
                 throw new NotFoundException("Элемента " + button.name + " нет в классе " + getClass().getName());
         }
-        return (ContentPage) page(contentPage);
+        return (ContentPage) PageFactory.initElements(driver, contentPage);
     }
 
     public enum Button {

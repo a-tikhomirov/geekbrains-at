@@ -1,46 +1,47 @@
 package ru.atikhomirov.geekbrains.at.section;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import ru.atikhomirov.geekbrains.at.page.common.ContentPage;
+import ru.atikhomirov.geekbrains.at.page.common.PageObject;
 
-import static com.codeborne.selenide.Selenide.$;
-
-public class Header {
+public class Header extends PageObject {
     private ContentPage ownerPage;
 
-    private SelenideElement section =
-            $(By.id("top-menu"));
+    @FindBy(css = "[id=\"top-menu\"]")
+    protected WebElement section;
 
-    private SelenideElement labelHeader =
-            $(By.className("gb-header__title"));
+    @FindBy(css = "[class=\"gb-header__title\"]")
+    protected WebElement labelHeader;
 
-    private SelenideElement buttonSearch =
-            $("[class*=\"gb-header\"] a[class=\"show-search-form\"]");
+    @FindBy(css = "[class*=\"gb-header\"] a[class=\"show-search-form\"]")
+    protected WebElement buttonSearch;
 
-    public Header(ContentPage ownerPage) {
+    public Header(WebDriver driver, ContentPage ownerPage) {
+        super(driver);
         this.ownerPage = ownerPage;
+    }
+
+    @Step("Проверить элементы страницы в секции header")
+    public ContentPage checkSection() {
+        checkElementDisplayed(new WebElement[] {
+                section,
+                buttonSearch
+        });
+        return ownerPage;
     }
 
     @Step("Проверить, что текст заголовка страницы соответствует тексту: \"{expectedTitle}\"")
     public ContentPage checkTitle(String expectedTitle) {
-        labelHeader.shouldBe(Condition.exactText(expectedTitle));
+        checkText(labelHeader, expectedTitle);
         return ownerPage;
     }
 
     @Step("Нажать кнопку поиска в секции header")
     public Search clickSearch() {
         buttonSearch.click();
-        return ownerPage.getSearch();
-    }
-
-    @Step("Проверить элементы страницы в секции header")
-    public ContentPage checkSection() {
-        section.isDisplayed();
-        labelHeader.isDisplayed();
-        buttonSearch.isDisplayed();
-        return ownerPage;
+        return new Search(driver, ownerPage);
     }
 }
