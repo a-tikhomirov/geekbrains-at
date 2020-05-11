@@ -3,8 +3,6 @@ package ru.atikhomirov.geekbrains.at;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
@@ -20,23 +18,13 @@ public class AuthTest extends BaseTest {
     private String login = "hao17583@bcaoo.com";
     private String password = "hao17583";
 
-    @BeforeEach
-    public void SetUp(){
-        setUpChromeDriver();
-        openPage("https://geekbrains.ru/login");
-    }
-
     @Description("Проверка авторизации на странице https://geekbrains.ru/login")
     @DisplayName("Проверка отображения страницы \"Главная\"")
     @Test
     public void checkMain(){
+        openPage("https://geekbrains.ru/login");
         (new AuthPage(driver))
                 .login(login, password)
                 .getHeader().checkTitle("Главная");
-    }
-
-    @AfterEach
-    void tearDown() {
-        stopDriver();
     }
 }
