@@ -33,7 +33,6 @@ public class AuthTest extends BaseTest {
         (new AuthPage(driver))
                 .login(login, password)
                 .getHeader().checkTitle("Главная");
-        stopDriver();
     }
 
     @AfterEach

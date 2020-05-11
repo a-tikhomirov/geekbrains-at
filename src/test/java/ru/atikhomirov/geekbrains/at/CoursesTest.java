@@ -41,7 +41,6 @@ public class CoursesTest extends BaseTest {
                 .getHeaderNavTab().clickButton(HeaderNavTab.Button.Courses)
                 .setFilter(true, "Бесплатные", "Тестирование")
                 .checkDisplayedCourses("Тестирование ПО. Уровень 1", "Тестирование ПО. Уровень 2");
-        stopDriver();
     }
 
     @AfterEach
