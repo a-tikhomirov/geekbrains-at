@@ -23,9 +23,9 @@ public class SearchTest extends BaseTest {
     @DisplayName("Проверка элементов")
     @Test
     void checkSearchResults() {
-        openPage("https://geekbrains.ru/career");
         new CareerPage(driver)
-                .getHeader().clickSearch()
+                .openUrl()
+                .header().clickSearch()
                 .enterSearchText("Java")
                 .checkCount(Search.Tab.Professions, greaterThanOrEqualTo(2))
                 .checkCount(Search.Tab.Courses, greaterThan(15))

@@ -1,7 +1,6 @@
 package ru.atikhomirov.geekbrains.at.common;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import io.qameta.allure.Step;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
@@ -9,7 +8,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
@@ -30,8 +28,9 @@ public class BaseTest {
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-browser-side-navigation");
         options.addArguments("--disable-gpu");
+        options.addArguments("--disable-notifications");
         options.addArguments("--disable-popup-blocking");
-        options.setExperimentalOption("excludeSwitches", Arrays.asList("disable-popup-blocking"));
+//        options.setExperimentalOption("excludeSwitches", Arrays.asList("disable-popup-blocking"));
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
@@ -40,11 +39,10 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
-    @Step("Открыть страницу: {url}")
-    protected void openPage(String url) {
-        //setUpChromeDriver();
-        driver.get(url);
-    }
+//    @Step("Открыть страницу: {url}")
+//    protected void openPage(String url) {
+//        driver.get(url);
+//    }
 
     @AfterEach
     protected void tearDown() {

@@ -5,13 +5,12 @@ import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import ru.atikhomirov.geekbrains.at.page.CareerPage;
 import ru.atikhomirov.geekbrains.at.page.common.ContentPage;
-import ru.atikhomirov.geekbrains.at.page.common.PageObject;
+import ru.atikhomirov.geekbrains.at.page.common.PageAsserts;
 import ru.atikhomirov.geekbrains.at.page.courses.CoursesPage;
 
-public class Sidebar extends PageObject {
+public class Sidebar extends PageAsserts {
     @FindBy(css = "[class*=\"main-page-hidden\"] [href=\"/courses\"]")
     private WebElement buttonCourses;
 
@@ -36,12 +35,10 @@ public class Sidebar extends PageObject {
 
     @Step("Нажать на кнопку \"{button}\" в секции sidebar")
     public ContentPage clickButton(Button button) {
-        Class contentPage = ContentPage.class;
         switch (button) {
             case Courses:
                 buttonCourses.click();
-                contentPage = CoursesPage.class;
-                break;
+                return new CoursesPage(driver);
             case Events:
                 buttonEvents.click();
                 break;
@@ -56,12 +53,11 @@ public class Sidebar extends PageObject {
                 break;
             case Career:
                 buttonCareer.click();
-                contentPage = CareerPage.class;
-                break;
+                return new CareerPage(driver);
             default:
                 throw new NotFoundException("Элемента " + button.name + " нет в классе " + getClass().getName());
         }
-        return (ContentPage) PageFactory.initElements(driver, contentPage);
+        return new ContentPage(driver);
     }
 
     public enum Button {

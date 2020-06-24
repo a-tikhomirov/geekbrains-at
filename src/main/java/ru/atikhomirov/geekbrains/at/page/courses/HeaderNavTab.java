@@ -5,9 +5,9 @@ import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import ru.atikhomirov.geekbrains.at.page.common.PageObject;
+import ru.atikhomirov.geekbrains.at.page.common.PageAsserts;
 
-public class HeaderNavTab extends PageObject {
+public class HeaderNavTab extends PageAsserts {
     private CoursesPage ownerPage;
 
     @FindBy(css = "[class*=\"nav nav-tabs\"] [href=\"#prof-compact\"]")

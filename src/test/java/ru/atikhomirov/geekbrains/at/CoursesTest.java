@@ -25,13 +25,13 @@ public class CoursesTest extends BaseTest {
     @DisplayName("Проверка результатов фильтрации")
     @Test()
     void checkCourses() {
-        openPage("https://geekbrains.ru/login");
         ((CoursesPage) new AuthPage(driver)
+                .openUrl()
                 .login(login, password)
-                .getSidebar().clickButton(Sidebar.Button.Courses)
-                .getHeader().checkTitle("Курсы")
+                .sidebar().clickButton(Sidebar.Button.Courses)
+                .header().checkTitle("Курсы")
         )
-                .getHeaderNavTab().clickButton(HeaderNavTab.Button.Courses)
+                .headerNavTab().clickButton(HeaderNavTab.Button.Courses)
                 .setFilter(true, "Бесплатные", "Тестирование")
                 .checkDisplayedCourses("Тестирование ПО. Уровень 1", "Тестирование ПО. Уровень 2");
     }

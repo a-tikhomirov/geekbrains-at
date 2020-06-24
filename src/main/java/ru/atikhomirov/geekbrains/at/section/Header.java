@@ -5,9 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ru.atikhomirov.geekbrains.at.page.common.ContentPage;
-import ru.atikhomirov.geekbrains.at.page.common.PageObject;
+import ru.atikhomirov.geekbrains.at.page.common.PageAsserts;
 
-public class Header extends PageObject {
+public class Header extends PageAsserts {
     private ContentPage ownerPage;
 
     @FindBy(css = "[id=\"top-menu\"]")

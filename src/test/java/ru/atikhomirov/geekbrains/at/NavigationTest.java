@@ -27,12 +27,12 @@ public class NavigationTest extends BaseTest {
     @ParameterizedTest(name = "{index} ==> Проверка перехода на страницу \"{0}\"...")
     @MethodSource("stringProvider")
     void checkSideBarNavigation(Sidebar.Button button) {
-        openPage("https://geekbrains.ru/career");
         new CareerPage(driver)
-                .getSidebar().clickButton(button)
-                .getHeader().checkSection()
-                .getHeader().checkTitle(button.getName())
-                .getFooter().checkSection()
-                .getFooter().checkElementsText();
+                .openUrl()
+                .sidebar().clickButton(button)
+                .header().checkSection()
+                .header().checkTitle(button.getName())
+                .footer().checkSection()
+                .footer().checkElementsText();
     }
 }

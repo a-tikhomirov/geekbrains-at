@@ -22,9 +22,9 @@ public class AuthTest extends BaseTest {
     @DisplayName("Проверка отображения страницы \"Главная\"")
     @Test
     public void checkMain(){
-        openPage("https://geekbrains.ru/login");
         (new AuthPage(driver))
+                .openUrl()
                 .login(login, password)
-                .getHeader().checkTitle("Главная");
+                .header().checkTitle("Главная");
     }
 }

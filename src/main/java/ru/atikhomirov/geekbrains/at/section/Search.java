@@ -7,9 +7,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ru.atikhomirov.geekbrains.at.page.common.ContentPage;
-import ru.atikhomirov.geekbrains.at.page.common.PageObject;
+import ru.atikhomirov.geekbrains.at.page.common.PageAsserts;
 
-public class Search extends PageObject {
+public class Search extends PageAsserts {
     private ContentPage ownerPage;
 
     @FindBy(css = "input[class=\"search-panel__search-field\"]")

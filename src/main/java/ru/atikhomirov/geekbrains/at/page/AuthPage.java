@@ -4,9 +4,12 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import ru.atikhomirov.geekbrains.at.page.common.PageObject;
+import ru.atikhomirov.geekbrains.at.page.common.OpenUrl;
+import ru.atikhomirov.geekbrains.at.page.common.PageAsserts;
 
-public class AuthPage extends PageObject {
+public class AuthPage extends PageAsserts implements OpenUrl {
+    private static final String URL = "https://geekbrains.ru/login";
+
     @FindBy(css = "[id=\"user_email\"]")
     private WebElement inputEmail;
 
@@ -26,5 +29,11 @@ public class AuthPage extends PageObject {
         waitVisible(inputPassword).sendKeys(passwd);
         waitClickable(buttonLogin).click();
         return new MainPage(driver);
+    }
+
+    @Override
+    public AuthPage openUrl() {
+        driver.get(URL);
+        return this;
     }
 }

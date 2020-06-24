@@ -1,6 +1,7 @@
 package ru.atikhomirov.geekbrains.at.page.courses;
 
 import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class CoursesPage extends ContentPage {
 
-    private HeaderNavTab headerNavTab;
+    @Getter private HeaderNavTab headerNavTab;
 
     @FindBy(xpath = "//form/ul//label")
     private List<WebElement> filters;
@@ -48,9 +49,5 @@ public class CoursesPage extends ContentPage {
             checkCourse(expectedCourse);
         }
         return this;
-    }
-
-    public HeaderNavTab getHeaderNavTab() {
-        return headerNavTab;
     }
 }
