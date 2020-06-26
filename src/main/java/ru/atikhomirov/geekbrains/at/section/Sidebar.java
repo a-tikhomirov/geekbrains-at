@@ -8,7 +8,6 @@ import ru.atikhomirov.geekbrains.at.page.common.ContentPage;
 import ru.atikhomirov.geekbrains.at.page.courses.CoursesPage;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.page;
 
 public class Sidebar {
     private SelenideElement icon =
@@ -34,12 +33,10 @@ public class Sidebar {
 
     @Step("Нажать на кнопку \"{button}\" в секции sidebar")
     public ContentPage clickButton(Button button) {
-        Class contentPage = ContentPage.class;
         switch (button) {
             case Courses:
                 buttonCourses.click();
-                contentPage = CoursesPage.class;
-                break;
+                return new CoursesPage();
             case Events:
                 buttonEvents.click();
                 break;
@@ -54,12 +51,11 @@ public class Sidebar {
                 break;
             case Career:
                 buttonCareer.click();
-                contentPage = CareerPage.class;
-                break;
+                return new CareerPage();
             default:
                 throw new NotFoundException("Элемента " + button.name + " нет в классе " + getClass().getName());
         }
-        return (ContentPage) page(contentPage);
+        return new ContentPage();
     }
 
     public enum Button {

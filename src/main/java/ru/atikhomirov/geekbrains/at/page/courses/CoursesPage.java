@@ -20,7 +20,8 @@ public class CoursesPage extends ContentPage {
             $$(By.xpath("//div[@class=\"course-cards-wrapper\"]//div[@class=\"gb-course-card__title-wrapper\"]"));
 
     protected SelenideElement getElementFromCollection(ElementsCollection collection, Condition condition) {
-        return collection.findBy(condition).waitUntil(Condition.visible, 5000);
+        Condition clickable = Condition.and("can be clicked", Condition.visible, Condition.enabled);
+        return collection.findBy(condition).waitUntil(clickable, 5000);
     }
 
     public CoursesPage() {
