@@ -1,20 +1,26 @@
-package ru.atikhomirov.geekbrains.at.page;
+package ru.atikhomirov.geekbrains.at.pom.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.page;
 
+@Component
 public class AuthPage {
-    private SelenideElement inputEmail =
+
+    @Autowired
+    private MainPage mainPage;
+
+    private final SelenideElement inputEmail =
             $("input[name=\"user[email]\"]");
 
-    private SelenideElement inputPassword =
+    private final SelenideElement inputPassword =
             $("input[name=\"user[password]\"]");
 
-    private SelenideElement buttonLogin =
+    private final SelenideElement buttonLogin =
             $("[data-testid=\"login-submit\"]");
 
     @Step("Авторизоваться с данными {email} / {passwd}")
@@ -22,6 +28,6 @@ public class AuthPage {
         inputEmail.shouldBe(Condition.enabled).setValue(email);
         inputPassword.shouldBe(Condition.enabled).setValue(passwd);
         buttonLogin.shouldBe(Condition.enabled).click();
-        return page(MainPage.class);
+        return mainPage;
     }
 }

@@ -7,9 +7,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.atikhomirov.geekbrains.at.common.BaseTest;
-import ru.atikhomirov.geekbrains.at.page.CareerPage;
-import ru.atikhomirov.geekbrains.at.section.Search;
+import ru.atikhomirov.geekbrains.at.pom.base.fragment.Search;
+import ru.atikhomirov.geekbrains.at.pom.page.CareerPage;
 
 import static org.hamcrest.Matchers.*;
 
@@ -19,13 +20,16 @@ import static org.hamcrest.Matchers.*;
 @Execution(ExecutionMode.CONCURRENT)
 public class SearchTest extends BaseTest {
 
+    @Autowired
+    private CareerPage careerPage;
+
     @Description("Проверка результатов поиска по ключевому слову Java")
     @DisplayName("Проверка элементов")
     @Test
     void checkSearchResults() {
         openPage("https://geekbrains.ru/career");
-        new CareerPage()
-                .getHeader().clickSearch()
+        careerPage
+                .header().clickSearch()
                 .enterSearchText("Java")
                 .checkCount(Search.Tab.Professions, greaterThanOrEqualTo(2))
                 .checkCount(Search.Tab.Courses, greaterThan(15))

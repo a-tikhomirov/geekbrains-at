@@ -8,15 +8,19 @@ import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.atikhomirov.geekbrains.at.common.BaseTest;
-import ru.atikhomirov.geekbrains.at.page.CareerPage;
-import ru.atikhomirov.geekbrains.at.section.Sidebar;
+import ru.atikhomirov.geekbrains.at.pom.base.fragment.Sidebar;
+import ru.atikhomirov.geekbrains.at.pom.page.CareerPage;
 
 @Feature(value = "Проверка страниц")
 @Story(value = "Проверка навигации")
 @DisplayName("Проверка навигации")
 @Execution(ExecutionMode.CONCURRENT)
 public class NavigationTest extends BaseTest {
+
+    @Autowired
+    private CareerPage careerPage;
 
     static Sidebar.Button[] stringProvider() {
         return  Sidebar.Button.values();
@@ -28,11 +32,11 @@ public class NavigationTest extends BaseTest {
     @MethodSource("stringProvider")
     void checkSideBarNavigation(Sidebar.Button button) {
         openPage("https://geekbrains.ru/career");
-        new CareerPage()
-                .getSidebar().clickButton(button)
-                .getHeader().checkSection()
-                .getHeader().checkTitle(button.getName())
-                .getFooter().checkSection()
-                .getFooter().checkElementsText();
+        careerPage
+                .sidebar().clickButton(button)
+                .header().checkSection()
+                .header().checkTitle(button.getName())
+                .footer().checkSocialLinks()
+                .footer().checkButtons();
     }
 }
