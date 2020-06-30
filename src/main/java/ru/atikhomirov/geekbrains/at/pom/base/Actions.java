@@ -18,11 +18,14 @@ public abstract class Actions {
     }
 
     protected void setCheckBoxes(ElementsCollection checkBoxes, boolean state, String... names) {
-
         for (String checkboxName : names) {
-            SelenideElement checkBox = getElementFromCollection(checkBoxes, Condition.text(checkboxName));
-            waitClickable(checkBox).find(By.className("js-checkbox"));
-            if (checkBox.isSelected() != state) checkBox.click();
+            SelenideElement checkBox = getElementFromCollection(checkBoxes, Condition.text(checkboxName))
+                    .waitUntil(Condition.visible, 5000)
+                    .waitUntil(Condition.enabled, 5000)
+                    .find(By.className("js-checkbox"));
+            if (checkBox.is(Condition.selected) != state) {
+                checkBox.click();
+            }
         }
     }
 }

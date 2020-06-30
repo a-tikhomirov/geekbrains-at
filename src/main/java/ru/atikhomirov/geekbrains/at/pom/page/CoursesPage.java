@@ -36,6 +36,7 @@ public class CoursesPage extends ContentPage {
 
     @Step("Установить в [{state}] фильтры: {names}")
     public CoursesPage setFilter(boolean state, String... names) {
+        filters.shouldHaveSize(14);
         setCheckBoxes(filters, state, names);
         return this;
     }
