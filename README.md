@@ -22,7 +22,7 @@
 
 1. JDK 1.8
 2. Maven 3.6.3
-3. Установленный браузер Google Chrome
+3. Установленный браузер Google Chrome / Mozilla Firefox
 
 ### Установка JDK
 
@@ -165,10 +165,16 @@
 $ git clone https://github.com/a-tikhomirov/geekbrains-at.git
 ```
 
-Для запуска проекта необходимо в командной строке перейти в директорию проекта и выполнить команду:
+Для запуска проекта c браузером Google Chrome необходимо в командной строке перейти в директорию проекта и выполнить команду:
 
 ```
 mvn clean test allure:serve
+```
+
+Для запуска проекта c браузером Mozilla Firefox необходимо в командной строке перейти в директорию проекта и выполнить команду:
+
+```
+mvn clean test -Dselenide.browser=firefox allure:serve
 ```
 
 В результаты выполнения данной команды:
@@ -227,18 +233,14 @@ mvn clean test allure:serve
 - selenide
 - allure-selenide
 - allure-junit5
-- junit-jupiter-api
-- junit-jupiter-engine
-- junit-jupiter-params
+- junit-jupiter
 - junit-vintage-engine
-- junit-platform-engine
-- junit-platform-launcher
+- junit-platform-console-standalone
 - hamcrest
 - slf4j-simple
 
 ### Используемые плагины
 
-- maven-compiler-plugin
 - maven-surefire-plugin
 - allure-maven
 
@@ -248,4 +250,5 @@ mvn clean test allure:serve
 
 ## Дополнительно
 
-Этот же проект, но с использованием библиотеки _Selenium_ - ветка _selenium_based_ - https://github.com/a-tikhomirov/geekbrains-at/tree/selenium_based
+- Этот же проект, но с использованием библиотек _Spring_ - ветка _selenide_spring_based_ - https://github.com/a-tikhomirov/geekbrains-at/tree/selenide_spring_based  
+- Этот же проект, но с использованием библиотеки _Selenium_ - ветка _selenium_based_ - https://github.com/a-tikhomirov/geekbrains-at/tree/selenium_based
