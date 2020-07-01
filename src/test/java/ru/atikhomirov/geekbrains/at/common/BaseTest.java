@@ -13,12 +13,21 @@ public class BaseTest {
     @Step("Открыть страницу: {url}")
     public void openPage(String url) {
         Configuration.startMaximized = true;
+        DesiredCapabilities capabilities = new DesiredCapabilities();
         switch (Configuration.browser) {
             case "chrome":
-                Configuration.browserCapabilities = DesiredCapabilities.chrome();
                 ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--disable-extensions");
+                //chromeOptions.addArguments("--headless");
+                chromeOptions.addArguments("--no-sandbox");
                 chromeOptions.addArguments("incognito");
-                Configuration.browserCapabilities.setCapability(ChromeOptions.CAPABILITY,chromeOptions);
+                capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                Configuration.browserCapabilities = capabilities;
+//                Configuration.browserCapabilities = DesiredCapabilities.chrome();
+//                ChromeOptions chromeOptions = new ChromeOptions();
+//                chromeOptions.addArguments("incognito");
+//                chromeOptions.addArguments("--start-maximized");
+//                Configuration.browserCapabilities.setCapability(ChromeOptions.CAPABILITY,chromeOptions);
                 break;
             case "firefox":
                 Configuration.browserCapabilities = DesiredCapabilities.firefox();
@@ -27,7 +36,7 @@ public class BaseTest {
                 Configuration.browserCapabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS,firefoxOptions);
                 break;
         }
-        Selenide.clearBrowserCookies();
+        //Selenide.clearBrowserCookies();
         Selenide.open(url);
     }
 }

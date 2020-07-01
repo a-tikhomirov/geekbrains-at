@@ -9,7 +9,7 @@ import ru.atikhomirov.geekbrains.at.pom.page.*;
 public abstract class ReturnPage extends Actions {
     @Autowired
     @Getter
-    private ContentPage coursesPage;
+    private CoursesPage coursesPage;
     @Autowired
     @Getter
     private CareerPage careerPage;
