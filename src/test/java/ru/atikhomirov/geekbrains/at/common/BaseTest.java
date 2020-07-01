@@ -18,10 +18,12 @@ public class BaseTest {
             case "chrome":
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--disable-extensions");
-                //chromeOptions.addArguments("--headless");
+                chromeOptions.addArguments("--headless");
                 chromeOptions.addArguments("--no-sandbox");
                 chromeOptions.addArguments("incognito");
+                chromeOptions.addArguments("--window-size=1920,1080");
                 capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                capabilities.setAcceptInsecureCerts(true);
                 Configuration.browserCapabilities = capabilities;
 //                Configuration.browserCapabilities = DesiredCapabilities.chrome();
 //                ChromeOptions chromeOptions = new ChromeOptions();
