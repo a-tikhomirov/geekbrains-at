@@ -20,8 +20,7 @@ public class CoursesPage extends ContentPage {
             $$(By.xpath("//div[@class=\"course-cards-wrapper\"]//div[@class=\"gb-course-card__title-wrapper\"]"));
 
     protected SelenideElement getElementFromCollection(ElementsCollection collection, Condition condition) {
-        Condition clickable = Condition.and("can be clicked", Condition.visible, Condition.enabled);
-        return collection.findBy(condition).waitUntil(clickable, 5000);
+        return collection.findBy(condition);
     }
 
     public CoursesPage() {
@@ -33,8 +32,12 @@ public class CoursesPage extends ContentPage {
     public CoursesPage setFilter(boolean state, String... args) {
         for (String filterName : args) {
             SelenideElement checkBox = getElementFromCollection(filters, Condition.text(filterName))
+                    .waitUntil(Condition.visible, 5000)
+                    .waitUntil(Condition.enabled, 5000)
                     .find(By.className("js-checkbox"));
-            if (checkBox.isSelected() != state) checkBox.click();
+            if (checkBox.is(Condition.selected) != state) {
+                checkBox.click();
+            }
         }
         return this;
     }
@@ -42,7 +45,7 @@ public class CoursesPage extends ContentPage {
     @Step("Проверить наличие курсов: {args}")
     public CoursesPage checkDisplayedCourses(String... args) {
         for (String expectedCourse : args) {
-            getElementFromCollection(courses, Condition.text(expectedCourse));
+            getElementFromCollection(courses, Condition.text(expectedCourse)).shouldBe(Condition.visible);
         }
         return this;
     }
